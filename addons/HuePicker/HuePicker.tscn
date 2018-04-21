@@ -60,35 +60,39 @@ _sections_unfolded = [ "ColorPicker", "ColorPicker/icons", "HSlider", "HSlider/i
 
 [sub_resource type="ShaderMaterial" id=4]
 
+resource_local_to_scene = true
 render_priority = 0
 shader = ExtResource( 4 )
 shader_param/color1 = Color( 0, 1, 1, 1 )
 shader_param/color2 = Color( 1, 1, 1, 1 )
-_sections_unfolded = [ "shader_param" ]
+_sections_unfolded = [ "Resource", "shader_param" ]
 
 [sub_resource type="ShaderMaterial" id=5]
 
+resource_local_to_scene = true
 render_priority = 0
 shader = ExtResource( 4 )
 shader_param/color1 = Color( 1, 0, 1, 1 )
 shader_param/color2 = Color( 1, 1, 1, 1 )
-_sections_unfolded = [ "shader_param" ]
+_sections_unfolded = [ "Resource", "shader_param" ]
 
 [sub_resource type="ShaderMaterial" id=6]
 
+resource_local_to_scene = true
 render_priority = 0
 shader = ExtResource( 4 )
 shader_param/color1 = Color( 1, 1, 0, 1 )
 shader_param/color2 = Color( 1, 1, 1, 1 )
-_sections_unfolded = [ "shader_param" ]
+_sections_unfolded = [ "Resource", "shader_param" ]
 
 [sub_resource type="ShaderMaterial" id=7]
 
+resource_local_to_scene = true
 render_priority = 0
 shader = ExtResource( 4 )
 shader_param/color1 = Color( 1, 1, 1, 0 )
 shader_param/color2 = Color( 1, 1, 1, 1 )
-_sections_unfolded = [ "shader_param" ]
+_sections_unfolded = [ "Resource", "shader_param" ]
 
 [sub_resource type="StyleBoxEmpty" id=8]
 
@@ -128,6 +132,7 @@ _sections_unfolded = [ "Anti Aliasing", "Border Width", "Shadow" ]
 
 [sub_resource type="ShaderMaterial" id=10]
 
+resource_local_to_scene = true
 render_priority = 0
 shader = ExtResource( 7 )
 shader_param/hue = 0.0
@@ -167,7 +172,7 @@ anti_aliasing = true
 anti_aliasing_size = 1
 _sections_unfolded = [ "Border Width", "Shadow" ]
 
-[node name="HuePicker" type="Control" index="0"]
+[node name="HuePicker" type="Control"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -426,12 +431,12 @@ anchor_left = 0.5
 anchor_top = 0.0
 anchor_right = 0.5
 anchor_bottom = 0.0
-margin_left = 119.625
+margin_left = 120.125
 margin_top = 125.0
-margin_right = 130.44
+margin_right = 131.44
 margin_bottom = 161.0
 rect_rotation = 90.0
-rect_pivot_offset = Vector2( 5, 18 )
+rect_pivot_offset = Vector2( 5.5, 18 )
 rect_clip_content = false
 mouse_filter = 0
 mouse_default_cursor_shape = 0

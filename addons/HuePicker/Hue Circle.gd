@@ -10,10 +10,13 @@ var Dragging
 var saved_h = 0 setget _sethue, _gethue
 
 func _sethue(value, sender=null):
-	if sender == $'../ClassicControls/Hider/ColorPicker' or sender == $'..':
+	if sender == null:
+		print ("Warning:  Attempt to set private variable _hue!")
+	if sender == $'../ClassicControls/Hider/ColorPicker' or sender == $'..' or sender.has_node(self.get_path()):
 		saved_h = value
 	else: 
-		print ("Warning:  Attempt to set private variable _hue!")
+		print ("Hue Circle: Warning, attempt to set private variable _hue!")
+		print ("Class %s, %s" % [sender.get_class(), sender])
 	pass
 func _gethue():
 	return saved_h
@@ -136,19 +139,28 @@ func _on_Hue_Circle_gui_input(ev):
 	#Drag
 	if Input.is_mouse_button_pressed(BUTTON_LEFT) and Dragging == DragType.HUE:
 		var angle = (rad2deg(mpos.angle_to_point(rect_size/2)+2*PI) ) / 360
+
+		#A workaround for a bug in Godot 3.0.2 where setting HSV properties resets alpha.
+		var alpha = $'..'.color.a
+
 		$'..'.color.h = angle
 		saved_h = angle
-#		print(saved_h)
 
+		$'..'.color.a = alpha  #Put alpha component back
+		
 	elif Input.is_mouse_button_pressed(BUTTON_LEFT) and Dragging == DragType.XY:
 		var pos = $'ColorRect/SatVal'.get_local_mouse_position()
 		var s = pos.x /  $'ColorRect/SatVal'.rect_size.x
 		var v = pos.y /  $'ColorRect/SatVal'.rect_size.y
+
+		#A workaround for a bug in Godot 3.0.2 where setting HSV properties resets alpha.
+		var alpha = $'..'.color.a
 			
 		$'..'.color.h = saved_h  #fixy?
 		$'..'.color.s = clamp(s, 0.0, 1.0)
 		$'..'.color.v = clamp(1-v, 0.0, 1.0)
-		#$'..'.color.h = saved_h
+
+		$'..'.color.a = alpha  #Put alpha component back
 	
 	if ev is InputEventMouseButton:		
 		if ev.button_index == BUTTON_LEFT and ev.pressed == false:  #MouseUp

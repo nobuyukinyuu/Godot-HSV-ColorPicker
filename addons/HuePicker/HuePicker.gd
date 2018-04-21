@@ -25,14 +25,14 @@ func color_changed(value):
 	emit_signal('color_changed', value)
 	
 
-func _ready():
-	isReady = true
-	
+func _ready():	
 #	print ("Setting up HuePicker.. %s" % color)
 	if color == null: color = ColorN('white')
+	isReady = true
 	
 	reposition_hue_picker()
 	_on_HuePicker_color_changed(color)
+
 
 func _on_HuePicker_resized():
 	reposition_hue_picker()
@@ -71,7 +71,9 @@ func reposition_hue_indicator():
 
 #Color change handler.
 func _on_HuePicker_color_changed(color):
-	if isReady == false or color == null:  return 
+	if isReady == false or color == null:  
+		print("HuePicker:  Warning, attempting to change color before control is ready")
+		return 
 	$"Hue Circle/indicator_h".set_rotation($"Hue Circle".saved_h * 2*PI + PI/2)
 	$"Hue Circle/ColorRect/SatVal".material.set_shader_param("hue", $"Hue Circle".saved_h)
 	reposition_hue_indicator()
@@ -88,5 +90,4 @@ func _on_HuePicker_color_changed(color):
 	$'ClassicControls/Hider/B_Prev'.material.set_shader_param("color2", Color(color.r,color.g,1,1))
 	$'ClassicControls/Hider/A_Prev'.material.set_shader_param("color1", Color(color.r,color.g,color.b,0))
 	$'ClassicControls/Hider/A_Prev'.material.set_shader_param("color2", Color(color.r,color.g,color.b,1))
-	
 	

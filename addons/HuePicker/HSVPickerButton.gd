@@ -8,16 +8,21 @@ var isReady = false
 
 func set_color(value):
 	color = value
+	
+
+
 	emit_signal('color_changed', value)
 
-	if isReady:
+	if Engine.editor_hint == true and isReady == true:
+		
 		$ColorRect.color = color
 		$ColorRect.self_modulate.a = color.a
+		
 
 func get_color():
 	return color
 
-func get_color_from_popup(color):  #Receiving the color form the hue picker
+func get_color_from_popup(color):  #Receiving the color from the hue picker
 	self.color = color
 	$ColorRect.color = color 
 	$ColorRect.self_modulate.a = color.a
@@ -25,11 +30,19 @@ func get_color_from_popup(color):  #Receiving the color form the hue picker
 
 	emit_signal('color_changed', color)
 
+
+#################################
 func _ready():
 	if color == null:  
-		color = ColorN('white')
-	$PopupPanel/HuePicker.color = color
+		print ("HSVPickerButton:  No color defined?")
+		color = ColorN('white')	
+	$ColorRect.color = color
 	isReady = true 
+
+#	yield(get_tree(), "idle_frame")
+	$PopupPanel/HuePicker.color = color
+#################################
+
 
 func _on_HSVPickerButton_pressed():
 	#Get quadrant I reside in so we can adjust the position of the popup.
@@ -68,6 +81,10 @@ func _on_PopupPanel_about_to_show():
 #	print ("Connectan")
 	$PopupPanel/HuePicker.connect('color_changed',self,"get_color_from_popup")
 
+	#Bodge to correct the picker if the color was set here externally.
+	$"PopupPanel/HuePicker/Hue Circle"._sethue(color.h,self)
+	$PopupPanel/HuePicker._on_HuePicker_color_changed(color)
+		
 func _on_PopupPanel_popup_hide():
 	#Disconnect from the hue picker
 	$PopupPanel/HuePicker.disconnect('color_changed', self, "get_color_from_popup")

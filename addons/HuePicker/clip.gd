@@ -35,9 +35,10 @@ func _resized():
 func _on_ColorPicker_color_changed(color):
 	#Prevent from accidentally resetting the internal hue if color's out of range
 	var c = Color(color.r, color.g, color.b, 1)
-	if c != ColorN('black', 1) and c != ColorN('white', 1):
+	if c != ColorN('black', 1) and c != ColorN('white', 1) and c.s !=0:
 		$'../../../Hue Circle'._sethue(self.color.h, self)
 
 
-		$'../../..'._on_HuePicker_color_changed(color)
-
+#		$'../../..'._on_HuePicker_color_changed(color)
+		$'../../..'.emit_signal('color_changed', color)
+		

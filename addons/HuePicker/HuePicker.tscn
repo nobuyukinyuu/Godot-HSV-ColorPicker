@@ -130,7 +130,7 @@ _sections_unfolded = [ "Anti Aliasing", "Border Width", "Shadow" ]
 
 render_priority = 0
 shader = ExtResource( 7 )
-shader_param/hue = 0
+shader_param/hue = 0.0
 
 [sub_resource type="ShaderMaterial" id=11]
 
@@ -431,7 +431,7 @@ margin_top = 125.0
 margin_right = 130.44
 margin_bottom = 161.0
 rect_rotation = 90.0
-rect_pivot_offset = Vector2( 5.5, 18 )
+rect_pivot_offset = Vector2( 5, 18 )
 rect_clip_content = false
 mouse_filter = 0
 mouse_default_cursor_shape = 0

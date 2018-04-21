@@ -2,7 +2,7 @@ tool
 extends Control
 const SQ22 = 0.70710678118654752440084436210485  #Sqrt(2)/2
 
-enum DragType {DRAG_NONE, DRAG_HUE, DRAG_XY}
+enum DragType {NONE, HUE, XY}
 var Dragging
 
 
@@ -128,29 +128,30 @@ func _on_Hue_Circle_gui_input(ev):
 	if ev is InputEventMouseButton:
 		if ev.pressed == true and ev.button_index == BUTTON_LEFT:  #MouseDown
 			if $ColorRect.get_rect().has_point(mpos):
-				Dragging = DragType.DRAG_XY
+				Dragging = DragType.XY
 #				saved_h = $'..'.color.h
 			else:
-				Dragging = DragType.DRAG_HUE
+				Dragging = DragType.HUE
 
 	#Drag
-	if Input.is_mouse_button_pressed(BUTTON_LEFT) and Dragging == DragType.DRAG_HUE:
+	if Input.is_mouse_button_pressed(BUTTON_LEFT) and Dragging == DragType.HUE:
 		var angle = (rad2deg(mpos.angle_to_point(rect_size/2)+2*PI) ) / 360
 		$'..'.color.h = angle
 		saved_h = angle
 #		print(saved_h)
 
-	elif Input.is_mouse_button_pressed(BUTTON_LEFT) and Dragging == DragType.DRAG_XY:
+	elif Input.is_mouse_button_pressed(BUTTON_LEFT) and Dragging == DragType.XY:
 		var pos = $'ColorRect/SatVal'.get_local_mouse_position()
 		var s = pos.x /  $'ColorRect/SatVal'.rect_size.x
 		var v = pos.y /  $'ColorRect/SatVal'.rect_size.y
-				
+			
+		$'..'.color.h = saved_h  #fixy?
 		$'..'.color.s = clamp(s, 0.0, 1.0)
 		$'..'.color.v = clamp(1-v, 0.0, 1.0)
 		#$'..'.color.h = saved_h
 	
 	if ev is InputEventMouseButton:		
 		if ev.button_index == BUTTON_LEFT and ev.pressed == false:  #MouseUp
-			Dragging = DragType.DRAG_NONE
+			Dragging = DragType.NONE
 			
 			

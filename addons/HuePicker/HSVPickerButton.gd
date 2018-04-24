@@ -8,9 +8,6 @@ var isReady = false
 
 func set_color(value):
 	color = value
-	
-
-
 	emit_signal('color_changed', value)
 
 	if Engine.editor_hint == true and isReady == true:

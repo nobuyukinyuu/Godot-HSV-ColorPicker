@@ -39,8 +39,12 @@ func _on_ColorPicker_color_changed(color):
 	if c != ColorN('black', 1) and c != ColorN('white', 1) and c.s !=0:
 		$'../../../Hue Circle'._sethue(self.color.h, self)
 		
+		$'../../..'.color = color 
 
 #		$'../../..'._on_HuePicker_color_changed(color)
 		$'../../..'.emit_signal('color_changed', color)
+
+		
+
 		
 	$'../../..'.color.a = color.a

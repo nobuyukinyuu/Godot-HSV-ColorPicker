@@ -4,7 +4,7 @@
 [ext_resource path="res://addons/HuePicker/HuePicker.tscn" type="PackedScene" id=2]
 [ext_resource path="res://addons/HuePicker/checkerboard.png" type="Texture" id=3]
 
-[node name="HSVPickerButton" type="Button"]
+[node name="HSVPickerButton" type="Button" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0

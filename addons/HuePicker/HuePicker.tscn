@@ -135,7 +135,7 @@ _sections_unfolded = [ "Anti Aliasing", "Border Width", "Shadow" ]
 resource_local_to_scene = true
 render_priority = 0
 shader = ExtResource( 7 )
-shader_param/hue = 0.0
+shader_param/hue = 0
 
 [sub_resource type="ShaderMaterial" id=11]
 
@@ -431,12 +431,12 @@ anchor_left = 0.5
 anchor_top = 0.0
 anchor_right = 0.5
 anchor_bottom = 0.0
-margin_left = 120.125
+margin_left = 119.625
 margin_top = 125.0
-margin_right = 131.44
+margin_right = 130.44
 margin_bottom = 161.0
 rect_rotation = 90.0
-rect_pivot_offset = Vector2( 5.5, 18 )
+rect_pivot_offset = Vector2( 5, 18 )
 rect_clip_content = false
 mouse_filter = 0
 mouse_default_cursor_shape = 0

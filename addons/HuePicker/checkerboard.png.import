@@ -10,7 +10,7 @@ source_file="res://addons/HuePicker/checkerboard.png"
 source_md5="96a34370424e5f3350d4961e3135be7e"
 
 dest_files=[ "res://.import/checkerboard.png-1cb35ef7006b504fb67d44affd54c59b.stex" ]
-dest_md5="021d9b1ac4ce734708820012309f376f"
+dest_md5="258131ec0f788184c7e33ea5bffc0df7"
 
 [params]
 
@@ -18,7 +18,7 @@ compress/mode=0
 compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/normal_map=0
-flags/repeat=0
+flags/repeat=1
 flags/filter=true
 flags/mipmaps=false
 flags/anisotropic=false

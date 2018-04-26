@@ -4,15 +4,10 @@ extends Control
 export(Color) var color setget color_changed
 signal color_changed(color)
 
-
-export(bool) var ShowClassicControls=true setget toggle_classic_controls 
-
 var isReady = false
 
+
 func color_changed(value):
-#	if isReady == false:  
-#		print ("I'm not ready! %s" % color)
-#		return 
 	color = value
 	
 	#TODO: This line is so we know to update the hue spinner if a property
@@ -24,70 +19,62 @@ func color_changed(value):
 	
 	emit_signal('color_changed', value)
 	
-
 func _ready():	
 #	print ("Setting up HuePicker.. %s" % color)
-	if color == null: color = ColorN('white')
+	if color == null:	color = ColorN('white')
 	isReady = true
 	
-	reposition_hue_picker()
+
+	yield(get_tree(),'idle_frame')
+	$"Hue Circle"._sethue(color.h,self)
+	$"Hue Circle".reposition_hue_indicator()
+	reposition_hue_indicator()
 	_on_HuePicker_color_changed(color)
 
-
 func _on_HuePicker_resized():
-	reposition_hue_picker()
-
-func toggle_classic_controls(value):
-	if isReady == false:  return 
-	ShowClassicControls = value
-	match value:
-		true:
-			$ClassicControls.visible = true
-			reposition_hue_picker()			
-		false:
-			$ClassicControls.visible = false
-			reposition_hue_picker()			
+	var short_edge = min(rect_size.x, rect_size.y)
+	var chunk = Vector2(short_edge,short_edge)
+	var indicator = $"Hue Circle/indicator_rgba"
+	indicator.rect_size = chunk / 8
+	$"Hue Circle/indicator_rgba/bg".position = chunk / 16
+	$"Hue Circle/indicator_rgba/bg".scale = chunk / 256
+	indicator.rect_position.x = rect_size.x/2 - short_edge/2
+	indicator.rect_position.y = rect_size.y/2 + short_edge/2 - indicator.rect_size.y
 	
-			
-func reposition_hue_picker():
-	if ShowClassicControls:
-		$"Hue Circle".rect_size.y = rect_size.y - $ClassicControls/Hider.rect_size.y - 4
-		$"Hue Circle".rect_size.x = rect_size.x 
-		$"Hue Circle".update()
-	else:
-		$"Hue Circle".rect_size = rect_size
-
-		
+	
 	reposition_hue_indicator()
 	
 func reposition_hue_indicator():
 	var hc   = $"Hue Circle"
 	var i    = $"Hue Circle/indicator_h"
-	var midR = min(hc.rect_size.x, hc.rect_size.y) * 0.4375
+	var midR = min(hc.rect_size.x, hc.rect_size.y) * 0.45
 	var ihx  = midR*cos(hc.saved_h * 2*PI) + hc.rect_size.x/2 - i.rect_size.x/2
 	var ihy  = midR*sin(hc.saved_h * 2*PI) + hc.rect_size.y/2 - i.rect_size.y/2
+
+	hc.reposition_hue_indicator()
+
+	$"Hue Circle/indicator_h".set_rotation($"Hue Circle".saved_h * 2*PI + PI/2)
 	i.rect_position = Vector2(ihx,ihy)
-	
 
 #Color change handler.
 func _on_HuePicker_color_changed(color):
 	if isReady == false or color == null:  
 		print("HuePicker:  Warning, attempting to change color before control is ready")
 		return 
-	$"Hue Circle/indicator_h".set_rotation($"Hue Circle".saved_h * 2*PI + PI/2)
+
+	$"Hue Circle/indicator_rgba/ColorRect".color = color
 	$"Hue Circle/ColorRect/SatVal".material.set_shader_param("hue", $"Hue Circle".saved_h)
 	reposition_hue_indicator()
-	
+	#Reposition SatVal indicator
 	$"Hue Circle/ColorRect/indicator_sv".position = Vector2(color.s, 1-color.v) * $"Hue Circle/ColorRect".rect_size
 	
-	#update the classic controls.
-	$ClassicControls/Hider/ColorPicker.color = color
-	$'ClassicControls/Hider/R_Prev'.material.set_shader_param("color1", Color(0,color.g,color.b,1))
-	$'ClassicControls/Hider/R_Prev'.material.set_shader_param("color2", Color(1,color.g,color.b,1))
-	$'ClassicControls/Hider/G_Prev'.material.set_shader_param("color1", Color(color.r,0,color.b,1))
-	$'ClassicControls/Hider/G_Prev'.material.set_shader_param("color2", Color(color.r,1,color.b,1))
-	$'ClassicControls/Hider/B_Prev'.material.set_shader_param("color1", Color(color.r,color.g,0,1))
-	$'ClassicControls/Hider/B_Prev'.material.set_shader_param("color2", Color(color.r,color.g,1,1))
-	$'ClassicControls/Hider/A_Prev'.material.set_shader_param("color1", Color(color.r,color.g,color.b,0))
-	$'ClassicControls/Hider/A_Prev'.material.set_shader_param("color2", Color(color.r,color.g,color.b,1))
-	
+
+#For the Popup color picker.
+func _on_ColorPicker_color_changed(color):
+	#	#Prevent from accidentally resetting the internal hue if color's out of range
+	var c = Color(color.r, color.g, color.b, 1)
+	if c != ColorN('black', 1) and c != ColorN('white', 1) and c.s !=0:
+		$'Hue Circle'._sethue(self.color.h, self)
+
+	self.color = color
+	$"Hue Circle".reposition_hue_indicator()

@@ -36,8 +36,8 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -306.0
-margin_top = -432.0
+margin_left = -320.0
+margin_top = -312.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
@@ -52,7 +52,36 @@ __meta__ = {
 
 [node name="HuePicker" parent="PopupPanel" index="0" instance=ExtResource( 2 )]
 
-margin_bottom = 432.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 16.0
+margin_top = 8.0
+margin_right = -16.0
+margin_bottom = -8.0
+
+[node name="Label" type="Label" parent="PopupPanel" index="1"]
+
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -65.0
+margin_top = -38.0
+margin_right = -8.0
+margin_bottom = -8.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+text = "R: 255.0
+G: 255.0
+B: 255.0"
+valign = 2
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
 _sections_unfolded = [ "Rect" ]
 
 [node name="TextureRect" type="TextureRect" parent="." index="1"]

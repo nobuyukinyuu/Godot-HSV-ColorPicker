@@ -1,18 +1,29 @@
 tool
 extends Control
+var UsefulFunctions = preload("res://addons/HuePicker/UsefulFunctions.gd")
 const SQ22 = 0.70710678118654752440084436210485  #Sqrt(2)/2
+
+var short_edge = min(rect_size.x, rect_size.y)
+var outR = short_edge * 0.5  #Outer Radius
+var inR = short_edge * 0.4 #0.375
+var midR = short_edge * 0.4375
+
 
 enum DragType {NONE, HUE, XY}
 var Dragging
 
-
 #We need to save the hue in case value is zeroed out and resets it
 var saved_h = 0 setget _sethue, _gethue
+
+
+
+func _init():
+	UsefulFunctions = UsefulFunctions.new()
 
 func _sethue(value, sender=null):
 	if sender == null:
 		print ("Warning:  Attempt to set private variable _hue!")
-	if sender == $'../ClassicControls/Hider/ColorPicker' or sender == $'..' or sender.has_node(self.get_path()):
+	if sender is ColorPicker or sender == $'..' or sender.has_node(self.get_path()):
 		saved_h = value
 	else: 
 		print ("Hue Circle: Warning, attempt to set private variable _hue!")
@@ -28,12 +39,13 @@ func _ready():
 	pass
 	
 func _draw():
-
 	var rgb  #Color()
-	var short_edge = min(rect_size.x, rect_size.y)
-	var outR = short_edge * 0.5  #Outer Radius
-	var inR = short_edge * 0.375
-	var midR = short_edge * 0.4375
+	short_edge = min(rect_size.x, rect_size.y)
+	outR = short_edge * 0.5  #Outer Radius
+	inR = short_edge * 0.4 #0.375
+	midR = short_edge * 0.4375
+
+
 
 	#square width, pos
 	var sqw = inR * 2 * SQ22
@@ -49,7 +61,7 @@ func _draw():
 	for theta in range(720):	
 		var i = deg2rad(theta/2.0)
 
-		rgb = HSVtoRGB(theta / 720.0, 1.0, 0.5)
+		rgb = UsefulFunctions.HSVtoRGB(theta / 720.0, 1.0, 0.5)
 		
 		draw_line(Vector2(x + cos(i) * inR, y + sin(i) * inR),
 				  Vector2(x + cos(i + PI/12.0) * outR, y + sin(i + PI/12.0) * outR),
@@ -58,74 +70,47 @@ func _draw():
 	
 	#Reposition stuff
 	$ColorRect.rect_size = Vector2(sqw, sqw)
-	$ColorRect.rect_position = Vector2(rect_size.x/2 - sqw/2+1,  rect_size.y/2 - sqw/2+1)  
-
+	$ColorRect.rect_position = Vector2(rect_size.x/2 - sqw/2+1,  rect_size.y/2 - sqw/2+1)
 	
+	reposition_hue_indicator()
+	var chunk = Vector2(short_edge,short_edge)
+	var indicator = $"indicator_rgba"
+	indicator.rect_size = chunk / 8
+	$"indicator_rgba/bg".position = chunk / 16
+	$"indicator_rgba/bg".scale = chunk / 256
+	indicator.rect_position.x = rect_size.x/2 - short_edge/2
+	indicator.rect_position.y = rect_size.y/2 + short_edge/2 - indicator.rect_size.y
+
+
+
+func reposition_hue_indicator():
 	$indicator_h.rect_pivot_offset = Vector2($indicator_h.rect_size.x / 2,
 											 $indicator_h.rect_size.y / 2)
-	$indicator_h.rect_size.y = outR - inR * 0.99
+	$indicator_h.rect_size.y = outR - inR * 0.95
 	$indicator_h.rect_size.x = short_edge / 25
-	
-func _input(event):
-	if Input.is_mouse_button_pressed(BUTTON_LEFT):
-		update()
-	
-	
-	
-	
-func HSVtoRGB (hue, saturation, luminance):
-	var r = float(luminance)
-	var g = float(luminance)
-	var b = float(luminance)
-	
-	var v = 0.0
 
-	if luminance <= 0.5:
-		v = luminance * (1.0 + saturation)
-	else:
-		v = luminance + saturation - luminance * saturation
+	var ctr = short_edge * 0.45 #Center ring
+	var ihx  = ctr*cos(saved_h * 2*PI) + rect_size.x/2 - $indicator_h.rect_size.x/2 
+	var ihy  = ctr*sin(saved_h * 2*PI) + rect_size.y/2 - $indicator_h.rect_size.y/2 
+	$indicator_h.rect_position = Vector2(ihx,ihy)
 
-	if v > 0:
-		var m = luminance + luminance - v
-		var sv = (v - m) / v
-		hue *= 6
-		var sextant = int(hue)
-		var fract = float(hue) - float(sextant)
-		var vsf = v * sv * fract
-		var mid1 = m + vsf
-		var mid2 = v - vsf
-		
-		match sextant:
-			0:
-				r = v
-				g = mid1
-				b = m
-			1:
-				r = mid2
-				g = v
-				b = m
-			2:
-				r = m
-				g = v
-				b = mid1
-			3:
-				r = m
-				g = mid2
-				b = v
-			4:
-				r = mid1
-				g = m
-				b = v
-			5:
-				r = v
-				g = m
-				b = mid2
-	return Color(r,g,b)
-
+	#Reposition SatVal indicator
+	$"ColorRect/indicator_sv".position = Vector2($'..'.color.s,
+											 1-$'..'.color.v) * $"ColorRect".rect_size
+	
+	
+#func _input(event):  #maybe _input instead if updating doesn't work?
+#	if Input.is_mouse_button_pressed(BUTTON_LEFT):
+#		print(event)
+#		update()
+#
+#
+	
+	
 
 ############## SIGNALS ###############################
 
-func _on_Hue_Circle_gui_input(ev):
+func _gui_input(ev):
 	var mpos = get_local_mouse_position()
 
 	if ev is InputEventMouseButton:
@@ -165,5 +150,5 @@ func _on_Hue_Circle_gui_input(ev):
 	if ev is InputEventMouseButton:		
 		if ev.button_index == BUTTON_LEFT and ev.pressed == false:  #MouseUp
 			Dragging = DragType.NONE
-			
-			
+		else:
+			update()

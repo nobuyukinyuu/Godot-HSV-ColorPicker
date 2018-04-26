@@ -10,6 +10,10 @@ func set_color(value):
 	color = value
 	emit_signal('color_changed', value)
 
+	if isReady == true:
+		var lbl = $PopupPanel/Label
+		lbl.text = "R: %.1f\nG: %.1f\nB: %.1f" % [color.r*255,color.g*255,color.b*255]
+
 	if Engine.editor_hint == true and isReady == true:
 		
 		$ColorRect.color = color

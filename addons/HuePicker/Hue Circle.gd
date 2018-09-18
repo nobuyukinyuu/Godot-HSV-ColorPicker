@@ -23,7 +23,7 @@ func _init():
 func _sethue(value, sender=null):
 	if sender == null:
 		print ("Warning:  Attempt to set private variable _hue!")
-	if sender is ColorPicker or sender == $'..' or sender.has_node(self.get_path()):
+	if sender is ColorPicker or sender == owner or sender.has_node(self.get_path()):
 		saved_h = value
 	else: 
 		print ("Hue Circle: Warning, attempt to set private variable _hue!")

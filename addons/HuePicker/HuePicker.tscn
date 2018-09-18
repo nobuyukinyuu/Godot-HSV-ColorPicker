@@ -42,7 +42,7 @@ _sections_unfolded = [ "Anti Aliasing", "Border Width", "Shadow" ]
 resource_local_to_scene = true
 render_priority = 0
 shader = ExtResource( 3 )
-shader_param/hue = 0
+shader_param/hue = 0.0
 
 [sub_resource type="ShaderMaterial" id=3]
 
@@ -195,9 +195,9 @@ anchor_top = 0.0
 anchor_right = 0.5
 anchor_bottom = 0.0
 margin_left = 110.2
-margin_top = 113.5
+margin_top = 113.0
 margin_right = 120.2
-margin_bottom = 143.5
+margin_bottom = 143.0
 rect_rotation = 90.0
 rect_pivot_offset = Vector2( 5, 15 )
 rect_clip_content = false
@@ -254,14 +254,15 @@ _sections_unfolded = [ "Anchor", "Margin", "Mouse" ]
 
 [node name="Pop" type="PopupPanel" parent="Hue Circle/indicator_rgba" index="2"]
 
+visible = false
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 1.0
 margin_top = 1.0
-margin_right = 31.0
-margin_bottom = 31.0
+margin_right = 307.0
+margin_bottom = 443.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
@@ -278,8 +279,8 @@ anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 4.0
 margin_top = 4.0
-margin_right = 302.0
-margin_bottom = 438.0
+margin_right = 4.0
+margin_bottom = 4.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 1

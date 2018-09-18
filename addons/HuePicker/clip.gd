@@ -11,16 +11,6 @@ func _on_ColorPicker_focus_exited():
 func _Focused():
 	Print ("WARNING:  Attempting to set read-only var ColorPicker.Focused") 
 
-##Handles capture
-#func _input(event):
-#	if event is InputEventMouseButton:
-#	#Try to consume the event away from ColorPicker if clicking outside its region
-#		var mpos = $'..'.get_local_mouse_position()
-#		if not Rect2(Vector2(0,0),$'..'.rect_size).has_point(mpos):
-#			print ("Event Consumed")
-#			accept_event()
-#			emit_signal('_NeedManualClick', event)
-
 
 func _ready():
 #	connect("resized",self,"_resized")
@@ -28,6 +18,20 @@ func _ready():
 func _draw():
 #	VisualServer.canvas_item_set_clip(get_canvas_item(),true)
 	reposition()
+
+
+
+
+#If mouse lies outside our input capture zone, tell the viewport to disable our input.
+func _gui_input(event):
+	if event is InputEventMouseButton or event is InputEventMouseMotion:
+		if get_local_mouse_position().y < 280:
+			$'..'.gui_disable_input = true 
+#			print("ignory")
+		else:
+			$'..'.gui_disable_input = false
+
+
 	
 
 #motherfucker don't you even THINK about repositioning yourself to 0 on me

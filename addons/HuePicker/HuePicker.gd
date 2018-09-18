@@ -7,18 +7,6 @@ signal color_changed(color)
 var isReady = false
 
 
-func color_changed(value):
-	color = value
-	
-	#TODO: This line is so we know to update the hue spinner if a property
-	#is set from within the Godot editor. Will cause problems for downstream
-	#Plugins, so try to figure out a way to determine that we're SPECIFICALLY
-	#editing this property from the Inspector, somehow.  Hack!!!
-	if Engine.editor_hint == true and $"Hue Circle" != null: 
-		$"Hue Circle"._sethue(value.h, self)
-	
-	emit_signal('color_changed', value)
-	
 func _ready():	
 #	print ("Setting up HuePicker.. %s" % color)
 	if color == null:	color = ColorN('white')
@@ -30,6 +18,19 @@ func _ready():
 	$"Hue Circle".reposition_hue_indicator()
 	reposition_hue_indicator()
 	_on_HuePicker_color_changed(color)
+
+
+func color_changed(value):
+	color = value
+	
+	#TODO: This line is so we know to update the hue spinner if a property
+	#is set from within the Godot editor. Will cause problems for downstream
+	#Plugins, so try to figure out a way to determine that we're SPECIFICALLY
+	#editing this property from the Inspector, somehow.  Hack!!!
+	if Engine.editor_hint == true and $"Hue Circle" != null: 
+		$"Hue Circle"._sethue(value.h, self)
+	
+	emit_signal('color_changed', value)
 
 func _on_HuePicker_resized():
 	var short_edge = min(rect_size.x, rect_size.y)

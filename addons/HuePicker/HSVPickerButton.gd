@@ -3,6 +3,7 @@ extends Button
 
 export(Color) var color setget set_color, get_color
 signal color_changed(color)
+export(bool) var enabled = true
 
 var isReady = false
 
@@ -46,6 +47,7 @@ func _ready():
 
 
 func _on_HSVPickerButton_pressed():
+	if not enabled == true:  return
 	#Get quadrant I reside in so we can adjust the position of the popup.
 	var quadrant = (get_viewport().size - rect_global_position)  / get_viewport().size
 	quadrant.x = 1-round(quadrant.x); quadrant.y = 1-round(quadrant.y)
@@ -79,7 +81,6 @@ func _on_HSVPickerButton_pressed():
 
 func _on_PopupPanel_about_to_show():
 	#Connect to the hue picker so we can succ its color
-#	print ("Connectan")
 	$PopupPanel/HuePicker.connect('color_changed',self,"get_color_from_popup")
 
 	#Bodge to correct the picker if the color was set here externally.

@@ -19,6 +19,7 @@ func _ready():
 	reposition_hue_indicator()
 	_on_HuePicker_color_changed(color)
 
+	set_meta("_editor_icon", preload("res://addons/HuePicker/icon.png"))
 
 func color_changed(value):
 	color = value

@@ -28,6 +28,7 @@ align = 1
 script = ExtResource( 1 )
 _sections_unfolded = [ "Rect" ]
 color = Color( 1, 1, 1, 1 )
+enabled = true
 
 [node name="PopupPanel" type="PopupPanel" parent="." index="0"]
 

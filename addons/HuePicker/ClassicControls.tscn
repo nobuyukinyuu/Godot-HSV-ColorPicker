@@ -121,7 +121,7 @@ shader_param/color1 = Color( 1, 1, 1, 0 )
 shader_param/color2 = Color( 1, 1, 1, 1 )
 _sections_unfolded = [ "Resource", "shader_param" ]
 
-[node name="ClassicControls" type="Container"]
+[node name="ClassicControls" type="Container" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -138,6 +138,7 @@ size_flags_horizontal = 1
 size_flags_vertical = 1
 script = ExtResource( 1 )
 _sections_unfolded = [ "Anchor", "Rect" ]
+color = Color( 1, 1, 1, 1 )
 
 [node name="Hider" type="ViewportContainer" parent="." index="0"]
 

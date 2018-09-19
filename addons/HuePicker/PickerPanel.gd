@@ -4,6 +4,8 @@ extends Panel
 export(Color) var color setget color_changed
 signal color_changed(color)
 
+export(bool) var flat setget flat_changed
+
 var isReady = false
 
 
@@ -15,6 +17,8 @@ func _ready():
 	$ClassicControls/Hider/Viewport/ColorPicker.connect("color_changed", 
 															self, "sliderChange")
 	isReady = true
+
+	set_meta("_editor_icon", preload("res://addons/HuePicker/icon_picker_panel.svg"))
 
 
 func color_changed(value):
@@ -45,3 +49,15 @@ func sliderChange(color):
 	pass
 	
 	
+func flat_changed(value):
+	if has_stylebox_override("panel"):
+		if not get("custom_styles/panel") is StyleBoxEmpty:
+			print ("StyleBox 'panel' is overridden. Can't set flat.")
+			return
+	
+	if value == true:
+		add_stylebox_override("panel", StyleBoxEmpty.new())
+	else:
+		set("custom_styles/panel", null)
+
+	flat = value

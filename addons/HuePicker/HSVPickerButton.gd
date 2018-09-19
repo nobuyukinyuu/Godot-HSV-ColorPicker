@@ -43,6 +43,9 @@ func _ready():
 
 #	yield(get_tree(), "idle_frame")
 	$PopupPanel/HuePicker.color = color
+
+	set_meta("_editor_icon", preload("res://addons/HuePicker/icon_button_smol.png"))
+
 #################################
 
 

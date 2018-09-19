@@ -17,6 +17,8 @@ func _ready():
 
 	connect("resized", self, "_on_ClassicControls_resized")
 
+	set_meta("_editor_icon", preload("res://addons/HuePicker/icon_classic_controls.svg"))
+
 
 func color_changed(value):
 	color = value

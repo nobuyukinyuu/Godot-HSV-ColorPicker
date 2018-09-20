@@ -109,7 +109,7 @@ anti_aliasing = true
 anti_aliasing_size = 1
 _sections_unfolded = [ "Border Width", "Corner Radius", "Expand Margin", "Shadow" ]
 
-[node name="HuePicker" type="Control" index="0"]
+[node name="HuePicker" type="Control"]
 
 anchor_left = 0.0
 anchor_top = 0.0

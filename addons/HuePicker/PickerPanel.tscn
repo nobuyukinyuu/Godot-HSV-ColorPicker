@@ -1,10 +1,11 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://addons/HuePicker/PickerPanel.gd" type="Script" id=1]
-[ext_resource path="res://addons/HuePicker/HuePicker.tscn" type="PackedScene" id=2]
-[ext_resource path="res://addons/HuePicker/ClassicControls.tscn" type="PackedScene" id=3]
+[ext_resource path="res://addons/HuePicker/icon_picker_panel.svg" type="Texture" id=2]
+[ext_resource path="res://addons/HuePicker/HuePicker.tscn" type="PackedScene" id=3]
+[ext_resource path="res://addons/HuePicker/ClassicControls.tscn" type="PackedScene" id=4]
 
-[node name="PickerPanel" type="Panel" index="0"]
+[node name="PickerPanel" type="Panel"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -22,12 +23,13 @@ size_flags_vertical = 1
 script = ExtResource( 1 )
 _sections_unfolded = [ "Rect", "Theme", "custom_styles" ]
 __meta__ = {
-"_edit_group_": true
+"_edit_group_": true,
+"_editor_icon": ExtResource( 2 )
 }
 color = Color( 1, 1, 1, 1 )
 flat = null
 
-[node name="HuePicker" parent="." index="0" instance=ExtResource( 2 )]
+[node name="HuePicker" parent="." index="0" instance=ExtResource( 3 )]
 
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -36,7 +38,7 @@ margin_right = 0.0
 margin_bottom = -168.0
 _sections_unfolded = [ "Anchor", "Mouse", "Rect" ]
 
-[node name="ClassicControls" parent="." index="1" instance=ExtResource( 3 )]
+[node name="ClassicControls" parent="." index="1" instance=ExtResource( 4 )]
 
 anchor_top = 1.0
 anchor_right = 1.0

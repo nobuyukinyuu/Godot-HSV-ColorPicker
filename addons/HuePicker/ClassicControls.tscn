@@ -1,10 +1,11 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://addons/HuePicker/clip2.gd" type="Script" id=1]
-[ext_resource path="res://addons/HuePicker/indicator.png" type="Texture" id=2]
-[ext_resource path="res://addons/HuePicker/clip.gd" type="Script" id=3]
-[ext_resource path="res://addons/HuePicker/slider_gradient.shader" type="Shader" id=4]
-[ext_resource path="res://addons/HuePicker/checkerboard.png" type="Texture" id=5]
+[ext_resource path="res://addons/HuePicker/icon_classic_controls.svg" type="Texture" id=2]
+[ext_resource path="res://addons/HuePicker/indicator.png" type="Texture" id=3]
+[ext_resource path="res://addons/HuePicker/clip.gd" type="Script" id=4]
+[ext_resource path="res://addons/HuePicker/slider_gradient.shader" type="Shader" id=5]
+[ext_resource path="res://addons/HuePicker/checkerboard.png" type="Texture" id=6]
 
 [sub_resource type="StyleBoxEmpty" id=1]
 
@@ -44,9 +45,9 @@ _sections_unfolded = [ "Border Width", "Content Margin", "Corner Radius", "Expan
 
 [sub_resource type="Theme" id=3]
 
-HSlider/icons/grabber = ExtResource( 2 )
+HSlider/icons/grabber = ExtResource( 3 )
 HSlider/icons/grabber_disabled = null
-HSlider/icons/grabber_highlight = ExtResource( 2 )
+HSlider/icons/grabber_highlight = ExtResource( 3 )
 HSlider/icons/tick = null
 HSlider/styles/focus = null
 HSlider/styles/grabber_area = SubResource( 1 )
@@ -59,7 +60,7 @@ _sections_unfolded = [ "ColorPicker", "ColorPicker/icons", "HSlider", "HSlider/i
 
 resource_local_to_scene = true
 render_priority = 0
-shader = ExtResource( 4 )
+shader = ExtResource( 5 )
 shader_param/color1 = Color( 0, 1, 1, 1 )
 shader_param/color2 = Color( 1, 1, 1, 1 )
 _sections_unfolded = [ "Resource", "shader_param" ]
@@ -68,7 +69,7 @@ _sections_unfolded = [ "Resource", "shader_param" ]
 
 resource_local_to_scene = true
 render_priority = 0
-shader = ExtResource( 4 )
+shader = ExtResource( 5 )
 shader_param/color1 = Color( 1, 0, 1, 1 )
 shader_param/color2 = Color( 1, 1, 1, 1 )
 _sections_unfolded = [ "Resource", "shader_param" ]
@@ -77,7 +78,7 @@ _sections_unfolded = [ "Resource", "shader_param" ]
 
 resource_local_to_scene = true
 render_priority = 0
-shader = ExtResource( 4 )
+shader = ExtResource( 5 )
 shader_param/color1 = Color( 1, 1, 0, 1 )
 shader_param/color2 = Color( 1, 1, 1, 1 )
 _sections_unfolded = [ "Resource", "shader_param" ]
@@ -116,12 +117,12 @@ shader = SubResource( 7 )
 
 resource_local_to_scene = true
 render_priority = 0
-shader = ExtResource( 4 )
+shader = ExtResource( 5 )
 shader_param/color1 = Color( 1, 1, 1, 0 )
 shader_param/color2 = Color( 1, 1, 1, 1 )
 _sections_unfolded = [ "Resource", "shader_param" ]
 
-[node name="ClassicControls" type="Container" index="0"]
+[node name="ClassicControls" type="Container"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -138,6 +139,9 @@ size_flags_horizontal = 1
 size_flags_vertical = 1
 script = ExtResource( 1 )
 _sections_unfolded = [ "Anchor", "Rect" ]
+__meta__ = {
+"_editor_icon": ExtResource( 2 )
+}
 color = Color( 1, 1, 1, 1 )
 
 [node name="Hider" type="ViewportContainer" parent="." index="0"]
@@ -203,7 +207,7 @@ alignment = 0
 color = Color( 1, 1, 1, 1 )
 edit_alpha = true
 raw_mode = false
-script = ExtResource( 3 )
+script = ExtResource( 4 )
 _sections_unfolded = [ "Mouse", "Theme", "custom_constants", "custom_icons" ]
 
 [node name="R_Prev" type="PanelContainer" parent="Hider/Viewport" index="1"]
@@ -289,7 +293,7 @@ _sections_unfolded = [ "Anchor", "Material", "Mouse", "Rect", "custom_styles" ]
 
 material = SubResource( 8 )
 position = Vector2( 0, -3 )
-texture = ExtResource( 5 )
+texture = ExtResource( 6 )
 centered = false
 region_enabled = true
 region_rect = Rect2( 0, 0, 304, 16 )

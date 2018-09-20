@@ -27,7 +27,7 @@ func color_changed(value):
 	#is set from within the Godot editor. Will cause problems for downstream
 	#Plugins, so try to figure out a way to determine that we're SPECIFICALLY
 	#editing this property from the Inspector, somehow.  Hack!!!
-	if Engine.editor_hint == true and $Hider/Viewport/ColorPicker != null: 
+	if $Hider/Viewport/ColorPicker != null: 
 		$Hider/Viewport/ColorPicker.color = value
 	
 	emit_signal('color_changed', value)

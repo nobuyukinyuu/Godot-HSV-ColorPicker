@@ -14,7 +14,7 @@ func _ready():
 		print ("PP:  reset color")
 		color = ColorN('white')
 	isReady = true
-	print ("Readying up PickerPanel.....")
+#	print ("Readying up PickerPanel.....")
 
 	yield(get_tree(),'idle_frame')
 	yield(get_tree(),'idle_frame')
@@ -30,7 +30,7 @@ func _ready():
 	sliders.connect("color_changed", 	self, "sliderChange")
 
 
-func color_changed(value):
+func color_changed(value, suppressSignal=false):
 #	if not isReady or value == null:
 #		print("PickerPanel: Warning, attempting to change color before control is ready")		
 #		print(color)
@@ -40,6 +40,8 @@ func color_changed(value):
 
 	var sliders = $ClassicControls/Hider/Viewport/ColorPicker
 	color = value
+	
+	if suppressSignal:  return
 	
 	if sliders !=null and $HuePicker != null:
 		sliderChange(value)
@@ -53,6 +55,7 @@ func huePickChange(color):
 	if not isReady or color == null:	return
 	var sliders = $ClassicControls/Hider/Viewport/ColorPicker
 	sliders.color = color
+	color_changed(color,true)
 
 func sliderChange(color):
 #	print("slc", color)
@@ -66,7 +69,7 @@ func sliderChange(color):
 		$HuePicker/"Hue Circle"._sethue(color.h, self)
 		$HuePicker._on_HuePicker_color_changed(color)
 		
-	pass
+	color_changed(color, true)
 	
 	
 func flat_changed(value):

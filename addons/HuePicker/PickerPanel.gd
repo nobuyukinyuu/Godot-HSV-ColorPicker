@@ -46,6 +46,7 @@ func color_changed(value, suppressSignal=false):
 	if sliders !=null and $HuePicker != null:
 		sliderChange(value)
 		huePickChange(value)
+		sliders.update_shaders()
 	
 	emit_signal('color_changed', value)
 
@@ -55,6 +56,8 @@ func huePickChange(color):
 	if not isReady or color == null:	return
 	var sliders = $ClassicControls/Hider/Viewport/ColorPicker
 	sliders.color = color
+	sliders.update_shaders()
+
 	color_changed(color,true)
 
 func sliderChange(color):

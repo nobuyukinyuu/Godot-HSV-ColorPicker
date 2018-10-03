@@ -61,6 +61,9 @@ func _on_ColorPicker_color_changed(color):
 #	$'../../..'.color.a = color.a
 
 	#update the classic controls.
+	update_shaders()
+	
+func update_shaders():
 	$'../R_Prev'.material.set_shader_param("color1", Color(0,color.g,color.b,1))
 	$'../R_Prev'.material.set_shader_param("color2", Color(1,color.g,color.b,1))
 	$'../G_Prev'.material.set_shader_param("color1", Color(color.r,0,color.b,1))

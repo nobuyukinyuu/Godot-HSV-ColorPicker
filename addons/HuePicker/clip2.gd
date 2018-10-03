@@ -29,7 +29,7 @@ func color_changed(value):
 	#editing this property from the Inspector, somehow.  Hack!!!
 	if $Hider/Viewport/ColorPicker != null: 
 		$Hider/Viewport/ColorPicker.color = value
-	
+		$Hider/Viewport/ColorPicker.update_shaders()
 	emit_signal('color_changed', value)
 
 
@@ -44,6 +44,11 @@ func _gui_input(event):
 
 
 
-
 func _on_ClassicControls_resized():
 	$Hider/Viewport/PanelContainer/TransBG.region_rect.size.x = max(260,rect_size.x)
+
+
+
+func update_shaders():
+	if $Hider/Viewport/ColorPicker != null: 
+		$Hider/Viewport/ColorPicker.update_shaders()
